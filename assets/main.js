@@ -37,6 +37,8 @@ var baddie2 = [5];
 var bossbaddie;
 var bossbaddieLife = 100;
 var bossbaddieIsSpawned = false;
+var startText;
+var start = true;
 
 
 //  Preload function is Phaser function which is responsible for loading stuff into RAM
@@ -144,12 +146,18 @@ function create()
         this.physics.add.collider(baddie[i], player, playerhit, null, this);
     }
     //  Text in game is added
-    scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#ffffff ' });    
+    scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#ffffff ' });   
+
+    startText = this.add.text(400, 16, 'SPACE IMPACT', { fontSize: '40px', fill: '#ffffff ' });    
+
+
 }
 
 //  Update function is Phaser function which is responsible for upadating screen. It's like while(true).
 function update(time, delta)
 {
+
+
     for(var i = 0;i<20;i++)
     {
         if(baddie[i].x < 0)
@@ -210,9 +218,18 @@ i++;
     {
         player.setVelocityY(-330);
     }
+    else if(cursors.right.isDown)
+    {
+        player.setVelocityX(100);
+    }
+    else if(cursors.left.isDown)
+    {
+        player.setVelocityX(-100);
+    }
     else 
     {
         player.setVelocityY(0);
+        player.setVelocityX(0);
     }
 
     if(cursors.space.isDown && time > lastFired)
@@ -224,6 +241,7 @@ i++;
             lastFired = time + 100;
         }
     }
+
 }
 
 //  Responsible for actions after star collision
