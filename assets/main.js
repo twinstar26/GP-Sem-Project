@@ -104,7 +104,7 @@ function create()
 
     bullets = this.physics.add.group({
         classType: Bullet,
-        maxSize: 1000,
+        maxSize: 100,
         runChildUpdate: true
     });
 /*
@@ -156,12 +156,15 @@ function create()
 //  Update function is Phaser function which is responsible for upadating screen. It's like while(true).
 function update(time, delta)
 {
-
-
     for(var i = 0;i<20;i++)
     {
         if(baddie[i].x < 0)
-        this.physics.pause();
+        {
+            this.physics.pause();
+            scoreText.setVisible(false);
+            scoreText1 = this.add.text(80, 300, `You couldn\'t save the galaxy!!!
+    Your score is: ` + score, { fontSize: '32px', fill: '#ffffff ' });
+        }
     }
 
     if(score>=200 && !baddie2IsSpawned)
@@ -187,7 +190,12 @@ function update(time, delta)
     {
         this.physics.moveTo(bossbaddie,player.x, player.y, 50);
         if(bossbaddie.x < 0)
-        this.physics.pause();
+        {
+            this.physics.pause();
+            scoreText.setVisible(false);
+            scoreText1 = this.add.text(80, 300, `You couldn\'t save the galaxy!!! 
+        Your score is: ` + score, { fontSize: '32px', fill: '#ffffff ' });
+        }
     }
 
     if(bossbaddieIsSpawned && i%100==0)
@@ -202,7 +210,12 @@ i++;
         {
             this.physics.moveTo(baddie2[i],player.x, player.y, 700);
             if(baddie2[i].x < 0)
-            this.physics.pause();
+            {
+                this.physics.pause();
+                scoreText.setVisible(false);
+                scoreText1 = this.add.text(80, 300, `You couldn\'t save the galaxy!!! 
+    Your score is: ` + score, { fontSize: '32px', fill: '#ffffff ' });
+            }
         }
     }
 
@@ -257,7 +270,7 @@ function hitBaddie (bad, bullet)
     {
         this.physics.pause();
         scoreText.setVisible(false);
-        scoreText1 = this.add.text(100, 300, 'You got lucky! Your score is: ' + score, { fontSize: '32px', fill: '#ffffff ' });
+        scoreText1 = this.add.text(80, 300, 'You saved the galaxy!!! Your score is: ' + score, { fontSize: '32px', fill: '#ffffff ' });
     }
 }
 
@@ -269,17 +282,19 @@ function hitboss (bad, bullet)
     {
         bad.setPosition(500000000,0);
         gameOver = true;
-        scoreText1 = this.add.text(100, 300, 'You got lucky! Your score is: ' + score, { fontSize: '32px', fill: '#ffffff ' });
+        scoreText1 = this.add.text(100, 300, `You saved the galaxy!!! 
+    Your score is: ` + 310, { fontSize: '32px', fill: '#ffffff ' });
     }
     score += 10;
     scoreText.setText('Score: ' + score);
-    bossbaddieLife -= 5;
+    bossbaddieLife -= 20;
 
     if(score >= 1000)
     {
         this.physics.pause();
         scoreText.setVisible(false);
-        scoreText1 = this.add.text(100, 300, 'You got lucky! Your score is: ' + score, { fontSize: '32px', fill: '#ffffff ' });
+        scoreText1 = this.add.text(80, 300, `You saved the galaxy!!! 
+    Your score is: ` + score, { fontSize: '32px', fill: '#ffffff ' });
     }
 }
 
@@ -289,6 +304,7 @@ function playerhit(bad,player)
     player.setTint(0xff0000);
     bad.setVisible(false);
     gameOver = true;
-    scoreText1 = this.add.text(200, 300, 'nOOb! Your score is: ' + score, { fontSize: '32px', fill: '#ffffff ' });
+    scoreText1 = this.add.text(80, 300, `You couldn\'t save the galaxy!!!
+     Your score is: ` + score, { fontSize: '32px', fill: '#ffffff ' });
 }
 
